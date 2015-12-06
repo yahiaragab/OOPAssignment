@@ -11,6 +11,10 @@ ControlFont headFont = new ControlFont(headfont, 241);
 ArrayList<AllTime> alltime = new ArrayList<AllTime>();
 ArrayList<Points> points = new ArrayList<Points>();
 ArrayList<Goals> goals = new ArrayList<Goals>();
+ArrayList<TopGS> scorer = new ArrayList<TopGS>();
+ArrayList<MostGlsInGame> scorerGame = new ArrayList<MostGlsInGame>();
+ArrayList<MostValuableXI> player = new ArrayList<MostValuableXI>();
+
 
 float border;
 float widthRange;
@@ -18,7 +22,7 @@ float heightRange;
 
 void setup() 
 {
-  size(1200, 600, P3D);
+  size(1200, 600);
   border = 40;
   widthRange = (float)width - (border*2);
   heightRange = (float)height - (border*2);
@@ -52,15 +56,35 @@ void loadData()
     Goals row = new Goals(data[i]);
     goals.add(row);
   }
+
+  data = loadStrings("TopGS.csv");
+
+  for (int i = 0; i < data.length; i++)
+  {
+    TopGS row = new TopGS(data[i]);
+    scorer.add(row);
+  }
+
+  data = loadStrings("MostGoalsInGame.csv");
+
+  for (int i = 0; i < data.length; i++)
+  {
+    MostGlsInGame row = new MostGlsInGame(data[i]);
+    scorerGame.add(row);
+  }
+
+  data = loadStrings("MostValuableXI.csv");
+
+  for (int i = 0; i < data.length; i++)
+  {
+    MostValuableXI row = new MostValuableXI(data[i], i);
+    player.add(row);
+  }
 }
 
 void draw() 
 {
   background(0);
-  fill(255);
-  stroke(255);
-  textSize(15);
-  text("Stats correct up to the end of the 2014/2015 season.", (float)width * 0.15f, border/2);
 
   hideButton();
 
@@ -102,7 +126,37 @@ void draw()
       tpts.PointGraph(team);
       break;
     }
+  case 107:
+    {
+      TopGS tgs = new TopGS();
+      tgs.showTopScorers();
+      break;
+    }
+  case 108:
+    {
+      MostGlsInGame mgg = new MostGlsInGame();
+      mgg.showMostGlsInGame();
+      break;
+    }
+  case 109:
+    {
+      MostValuableXI mvxi = new MostValuableXI();
+      int[] formation = {
+        1, 4, 2, 3, 1
+      };
+      for (int i = 0; i < formation.length; i++)
+      {
+        mvxi.display(formation[i], formation.length, i);
+      }
+      break;
+    }
   default:
+    {
+      fill(255);
+      stroke(255);
+      textSize(15);
+      text("Stats correct up to the end of the 2014/2015 season.", (float)width * 0.15f, border/2);
+    }
     break;
   }
 }
@@ -126,7 +180,8 @@ void mainMenu()
   String[] mainMsg = {
     "Return To Main Menu", "All Time BPL Table", "Your Team", 
     "All Teams: Goals", "All Teams: Points", "By Team: Goals", 
-    "By Team: Points"
+    "By Team: Points", "Top Goal Scorers", "Most Goals/Game", 
+    "Most Valuable XI"
   }; 
 
   mainBtns = mainMsg.length;

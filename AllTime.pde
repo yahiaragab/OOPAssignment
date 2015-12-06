@@ -100,7 +100,7 @@ class AllTime
       stroke(255, 0, 0);
       line(colDist * i, border, colDist * i, (float)height);
     }
-  }
+  }//end showTable
 
   void TeamBarChartDisplay(int team)
   {
@@ -408,7 +408,7 @@ class AllTime
     println(team);
     background(0);
     float sum = alltime.get(team).Points + alltime.get(team).matchesPlayed;
-println("yo");
+
     int maxIndexFor = 0;
     float maxfor = 0;
     int maxIndexAgainst = 0;

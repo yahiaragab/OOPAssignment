@@ -1,0 +1,22 @@
+Chelsea FC	Chelsea FC	35	24,5	17
+Liverpool FC	Liverpool FC FA Cup Winner	31	24,6	14
+Manchester United	Manchester United The League Cup WinnerUEFA Super Cup Winner	32	23,9	13
+Middlesbrough FC	Middlesbrough FC	26	24,8	10
+Wimbledon FC	Wimbledon FC	30	24,1	10
+Tottenham Hotspur	Tottenham Hotspur English Supercup Winner	32	22,6	10
+Manchester City	Manchester City	24	24,3	9
+Aston Villa	Aston Villa	27	24,4	9
+Coventry City	Coventry City	27	24,9	9
+Norwich City	Norwich City	21	24,8	9
+Everton FC	Everton FC	26	26,4	8
+Nottingham Forest	Nottingham Forest	25	23,8	8
+Arsenal FC	Arsenal FC English Supercup Winner	31	24,3	8
+Blackburn Rovers	Blackburn Rovers	25	23,6	7
+Ipswich Town	Ipswich Town	24	25,9	7
+Leeds United	Leeds United English Champion	32	24,9	7
+Southampton FC	Southampton FC	25	25,1	6
+Sheffield United	Sheffield United	27	24,8	6
+Sheffield Wednesday	Sheffield Wednesday	28	25,7	6
+Queens Park Rangers	Queens Park Rangers	24	25,3	6
+Crystal Palace	Crystal Palace	27	23,3	5
+Oldham Athletic	Oldham Athletic	25	24,7	4
