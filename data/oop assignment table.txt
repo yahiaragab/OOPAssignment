@@ -1,0 +1,6 @@
+Rank	Club Name				Home					Away				Total Goals	GoalDif		Points
+			MatchesPlayed	 Won Drawn Lost For(goals) Against	Won Drawn Lost For(goals) Against	For Against
+
+
+	Average Pts/game							Average Gls/game
+Rank	Club	P	Points	Pts/Game	 		Rank	Club	P	Goals	Gls/Game
