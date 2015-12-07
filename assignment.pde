@@ -1,6 +1,7 @@
 
 import controlP5.*;
 ControlP5 controlP5;
+
 ArrayList<controlP5.Button> buttons = new ArrayList<controlP5.Button>();
 DropdownList ddl;
 PFont btnfont = createFont("Arial", 20, false); // use true/false for smooth/no-smooth
@@ -8,7 +9,8 @@ ControlFont btnFont = new ControlFont(btnfont, 241);
 PFont headfont = createFont("Times", 15, false); // use true/false for smooth/no-smooth
 ControlFont headFont = new ControlFont(headfont, 241);
 
-ArrayList<AllTime> alltime = new ArrayList<AllTime>();
+ArrayList<PLTable> alltime = new ArrayList<PLTable>();
+ArrayList<PLTable> last10yrs = new ArrayList<PLTable>();
 ArrayList<Points> points = new ArrayList<Points>();
 ArrayList<Goals> goals = new ArrayList<Goals>();
 ArrayList<TopGS> scorer = new ArrayList<TopGS>();
@@ -16,12 +18,12 @@ ArrayList<MostGlsInGame> scorerGame = new ArrayList<MostGlsInGame>();
 ArrayList<MostValuableXI> player = new ArrayList<MostValuableXI>();
 
 String[] allTimeColNames = {
-    "P", 
-    "W", "L", "D", "GF", "GA",
-    "W", "L", "D", "GF", "GA", 
-    "F", "A", 
-    "GD", "Pts."
-  };
+  "P Total Matches Played", 
+  "W Wins (Home)", "L Losses (Home)", "D Draws (Home)", "GF Goals For (Home)", "GA Goals For (Home)", 
+  "W Wins (Away)", "L Losses (Away)", "D Draws (Away)", "GF Goals For (Away)", "GA Goals For (Away)", 
+  "F Total Goals For", "A Total Goals Against", 
+  "GD All Time Goal Difference", "Pts All Time Points"
+};
 
 float border;
 float widthRange;
@@ -44,9 +46,10 @@ void loadData()
 
   for (int i = 0; i < data.length; i++)
   {
-    AllTime row = new AllTime(data[i]);
+    PLTable row = new PLTable(data[i]);
     alltime.add(row);
   }
+
 
   data = loadStrings("PLAllTimeAvgPts.csv");
 
@@ -89,47 +92,49 @@ void loadData()
   }
 }
 
+PLTable st = new PLTable();
+PLTable bcd = new PLTable();
+PLTable tpts = new PLTable();
+PLTable agls = new PLTable();
+PLTable apts = new PLTable();
+PLTable tgls = new PLTable();
+
 void draw() 
 {
   background(0);
 
   hideButton();
-    
+
   switch (mode)
   {
   case 101:
     {
-      AllTime st = new AllTime();
-      st.showTable();
+      st.showTable(alltime);
       break;
     }
   case 102:
     {
-      AllTime bcd = new AllTime();
+
       bcd.TeamBarChartDisplay(team);
       break;
     }
   case 103:
     {
-      AllTime agls = new AllTime();
       agls.TeamAllGoals(team);
       break;
     }
   case 104:
     {
-      AllTime apts = new AllTime();
       apts.TeamAllPoints(team);
       break;
     }
   case 105:
     {
-      AllTime tgls = new AllTime();
       tgls.GoalGraph(team);
       break;
     }
   case 106:
     {
-      AllTime tpts = new AllTime();
       tpts.PointGraph(team);
       break;
     }
@@ -197,7 +202,7 @@ void mainMenu()
   {
     w = (int)textWidth(mainMsg[i]) + padding;
     h = 30;
-    int x = ( (int)widthRange / 2) - (w/2);
+    int x = ( (int)widthRange / 2 ) - (w/2);
     int y = ( (int)heightRange / mainMsg.length) * i;
     buttons.add( controlP5.addButton(mainMsg[i], i + 100, x, y, w, h) );
     buttons.get(i).getCaptionLabel().setFont(btnfont);
@@ -212,7 +217,7 @@ void mainMenu()
   ddl = controlP5.addDropdownList("Select Team", ddlX, ddlY, ddlW, ddlH);
   ddl.close();
   ddl.getCaptionLabel().getStyle().marginTop = 6;
-//  ddl.getCaptionLabel().getStyle().marginLeft = 60;
+  //  ddl.getCaptionLabel().getStyle().marginLeft = 60;
 
   customize(ddl);
 }
