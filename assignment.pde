@@ -15,6 +15,13 @@ ArrayList<TopGS> scorer = new ArrayList<TopGS>();
 ArrayList<MostGlsInGame> scorerGame = new ArrayList<MostGlsInGame>();
 ArrayList<MostValuableXI> player = new ArrayList<MostValuableXI>();
 
+String[] allTimeColNames = {
+    "P", 
+    "W", "L", "D", "GF", "GA",
+    "W", "L", "D", "GF", "GA", 
+    "F", "A", 
+    "GD", "Pts."
+  };
 
 float border;
 float widthRange;
@@ -87,7 +94,7 @@ void draw()
   background(0);
 
   hideButton();
-  
+    
   switch (mode)
   {
   case 101:
@@ -197,14 +204,15 @@ void mainMenu()
     //    buttons.get(i).captionLabel().getStyle().marginTop = 36;
   }
 
-  int ddlX = (int)(width * 0.65);
+  int ddlX = (int)(width * 0.7);
   int ddlY = 0;
   int ddlW = 300;
   int ddlH = 120;
 
   ddl = controlP5.addDropdownList("Select Team", ddlX, ddlY, ddlW, ddlH);
+  ddl.close();
   ddl.getCaptionLabel().getStyle().marginTop = 6;
-  //  ddl.getCaptionLabel().getStyle().marginLeft = 60;
+//  ddl.getCaptionLabel().getStyle().marginLeft = 60;
 
   customize(ddl);
 }

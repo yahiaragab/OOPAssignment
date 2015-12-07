@@ -67,23 +67,31 @@ class MostValuableXI
     }//end for
   }//end drawPitch
   
-  
   int counter = 0;
 
   void drawXI(int numInLine, int lines, int Z)
   {
     float w = 60;
     float h = 80;
-    float rowDist = ( widthRange / (numInLine+1) ) - (w/2);
-    float colDist = heightRange / (float)lines;
+    float padding = 10;
+    float rowDist = ( widthRange / (numInLine + 1) ) - (w/2);
+    float colDist = (heightRange / (float)lines) + padding;
 
     //draw XI
     for (int i = counter; i < numInLine + counter; i++)
     {
       float x = ( ( ( rowDist * ( i - counter) ) + rowDist ) + border ) + (w/2);
-      float y = ( heightRange - ( (colDist * Z) + colDist ) ) + (border + border/2);
+      
+      if(i == 0 || i == 10)
+      {
+        x -= w/2;
+      }
+      
+      float y = ( heightRange - ( (colDist * Z) + colDist ) ) + (border*2);
+      rect(x, y, w, h);
       image(player.get(i).pic, x, y, w, h);
       stroke(255);
+      textSize(20);
       fill(255);
       textAlign(CENTER);
       text(player.get(i).name, x + ( w/2 ), y + ( h + (h/4) ));

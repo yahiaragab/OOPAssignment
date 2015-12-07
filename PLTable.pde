@@ -1,4 +1,4 @@
-class AllTime
+class PLTable
 { 
   int rank;
   String clubName;
@@ -22,7 +22,7 @@ class AllTime
   int goalDiff;
   int Points;
 
-  AllTime()
+  PLTable()
   {
     rank = 0;
     clubName = "";
@@ -47,7 +47,7 @@ class AllTime
     Points = 0;
   }
 
-  AllTime(String line)
+  PLTable(String line)
   {
     String[] data = line.split(",");
 
@@ -74,113 +74,12 @@ class AllTime
     Points = Integer.parseInt(data[16]);
   }
 
-  int getField(int team, int i)
-  {
-    switch (i)
-    {
-    case 0:
-      {
-        return alltime.get(team).rank;
-      }
-    case 2:
-      {
-        return alltime.get(team).matchesPlayed;
-      }
-    case 3:
-      {
-        return alltime.get(team).home_Won;
-      }
-    case 4:
-      {
-        return alltime.get(team).home_Loss;
-      }
-    case 5:
-      {
-        return alltime.get(team).home_Drawn;
-      }
-    case 6:
-      {
-        return alltime.get(team).home_GoalsFor;
-      }
-    case 7:
-      {
-        return alltime.get(team).home_GoalsAgainst;
-      }
-    case 8:
-      {
-        return alltime.get(team).away_Won;
-      }
-    case 9:
-      {
-        return alltime.get(team).away_Loss;
-      }
-    case 10:
-      {
-        return alltime.get(team).away_Drawn;
-      }
-    case 11:
-      {
-        return alltime.get(team).away_GoalsFor;
-      }
-    case 12:
-      {
-        return alltime.get(team).away_GoalsAgainst;
-      }
-    case 13:
-      {
-        return alltime.get(team).allGoalsFor;
-      }
-    case 14:
-      {
-        return alltime.get(team).allGoalsAgainst;
-      }
-    case 15:
-      {
-        return alltime.get(team).goalDiff;
-      }
-    case 16:
-      {
-        return alltime.get(team).Points;
-      }
-      default:
-      {
-        return -1;
-      }
-    }
-    
-  }
 
   void showTable()
   {
-    background(0);
-    
-    float rowDist =  (heightRange + border)  / (float)alltime.size();
-    float colDist = 0;
-    float padding = 5;
-    int numCols = 17;
-    for (int i = 0; i < alltime.size(); i++)
-    {
-      for (int j = 0; j < numCols; j++)
-      {
-        colDist = (float)widthRange / numCols;
-        //textAlign(RIGHT);
-        stroke(255);
-        fill(255);
-        if (j != 1)
-        {
-          text( alltime.get(i).getField(i, j) , (colDist * j), ((rowDist * i) + rowDist ) + border);
-        }
-        else
-        {
-          text( alltime.get(i).clubName , (colDist * j), ((rowDist * i) + rowDist ) + border);
-        }
-      }
-      stroke(255, 0, 0);
-      line(colDist * i, border, colDist * i, (float)height);
-    }
   }//end showTable
 
-  void TeamBarChartDisplay(int team)
+    void TeamBarChartDisplay(int team)
   {
 
     //make the barchart diplay value (alltime.get(team).value when mouse hovers
@@ -190,79 +89,49 @@ class AllTime
     //      drawAxis(rainFall, months, 15, 150, border);
     stroke(0, 255, 255);
 
-    float lineWidth =  10;
-    int numCols = 17;
-    float max = alltime.get(team).rank;
-    int maxIndex = 0;
-    for (int i = 1; i < numCols; i ++)
+    float lineWidth =  widthRange / (float) (alltime.size() - 1) ;
+    String[] dataAllTime = loadStrings("PLAllTime.csv");
+    String[] data;
+
+    data = dataAllTime[team].split(",");
+
+    float[] cols = new float[data.length];
+
+    for (int i = 0; i < data.length; i++)
     {
-      if (alltime.get(team).getField(team, i) > max)
+      // Add each element from the string array to the arraylist
+      if (i != 1)
       {
-        max = alltime.get(team).getField(team, i);
+        float f = Float.parseFloat(data[i]);
+        cols[i] = f;
+      }
+    }
+    float max = cols[0];
+    int maxIndex = 0;
+    for (int i = 1; i < cols.length; i ++)
+    {
+      if (cols[i] > max)
+      {
+        max = cols[i];
         maxIndex = i;
       }
     }
-    float barWidth = (widthRange - lineWidth) / ((float)numCols-2);
-    float scale = (heightRange-border) / max;
-
-    color P = color(100);
-    color home = color(0, 255, 0);
-    color away = color(0, 0, 127);
-    color goals = color(255, 100, 0);
-    color rest =  color(100, 100, 100);
-    
-    stroke(P);
-    rect(border*4, 5, 10, 10);
-    text("Played", (border*4) +10, 20);
-    
-    stroke(home);
-    rect(border*7, 5, 10, 10);
-    text("Home", border*7 +10, 20);
-    
-    stroke(away);
-    rect(border*10, 5, 10, 10);
-    text("Away", border*10 +10, 20);
-    
-    stroke(goals);
-    rect(border*13, 5, 10, 10);
-    text("Goals", border*13 +10, 20);
-    
-    stroke(rest);
-    rect(border*16, 5, 10, 10);
-    text("GD and Pts.", border*16 +10, 20);
-    
-    for (int i = 2; i < numCols; i ++)
+    float barWidth = width/ (cols.length-2);
+    float scale = heightRange / max;
+    text(data[1], border, border*2);
+    for (int i = 2; i < cols.length; i ++)
     {
-      float x = ((i-2) * barWidth) + (border);
-      float y = (alltime.get(team).getField(team, i) * scale);
+      float x = (i-2) * barWidth;
+      float y = cols[i] * scale;
       float c = map(y, 0, max * scale, 255, 100);
-      stroke(150);
-      strokeWeight(2);
-      
-      fill(P); 
-      if(i > 2 && i < 8)
-        fill(home);  
-      else if(i > 7 && i <= 12)
-        fill(away);
-      else if(i > 12 && i <= 14)
-        fill(goals);
-      else if(i > 14 && i <= 16)
-        fill(rest);
-        
-      rect(x+lineWidth, (heightRange - lineWidth) + border, barWidth-lineWidth, - y);
-      textSize(25);
-      fill(255, 0, 0);
-      text(alltime.get(team).getField(team, i), (barWidth * (i-2)) + border + lineWidth, (heightRange - border));
-      text(allTimeColNames[i-2], ( ( (i-2) * barWidth ) + barWidth )  , height - 10 );
+      stroke(0, c, c);
+      fill(0, c, c);        
+      rect(x, height, barWidth - 1, - y);
+      fill(0);
+      text(cols[i], barWidth * (i-2), height - border);
       // Or use the Processing map function!
       //rect(x, height, barWidth, - map(rainFall[i], 0, max, 0, height));
     }
-    stroke(255);
-    strokeWeight(lineWidth);
-    fill(255);
-    text(alltime.get(team).clubName, border*2, border*2);
-    line(border, border, border, heightRange + border);
-    line(border, heightRange + border, widthRange + border, heightRange+border);
   }
 
   void TeamAllGoals(int team)
@@ -433,10 +302,10 @@ class AllTime
 
     thetaPrev = pieChart("Goals Against: ", alltime.get(team).allGoalsFor, sum, max, thetaPrev);
     thetaPrev = 0;
-    
+
     float centX = width/2.0f;
     float centY = height/2.0f;
-    
+
     float theta = map(alltime.get(team).allGoalsFor, 0, sum, 0, TWO_PI);
     textAlign(CENTER);
     float col = map(alltime.get(team).allGoalsFor, 0, max, 255, 100);
@@ -553,10 +422,10 @@ class AllTime
 
     thetaPrev = pieChart("Matches Played: ", alltime.get(team).Points, sum, max, thetaPrev);
     thetaPrev = 0;
-    
+
     float centX = width/2.0f;
     float centY = height/2.0f;
-    
+
     float theta = map(alltime.get(team).Points, 0, sum, 0, TWO_PI);
     textAlign(CENTER);
     float col = map(alltime.get(team).Points, 0, max, 255, 100);
@@ -630,8 +499,8 @@ class AllTime
     // Or use the Processing map function!
     //rect(x, height, barWidth, - map(rainFall[i], 0, max, 0, height));
   }//end goal graph
-  
-  
+
+
   float pieChart(String message, int data, float sum, float max, float thetaPrev )
   {
     float centX = (float)width / 2.0f;
