@@ -87,7 +87,7 @@ void draw()
   background(0);
 
   hideButton();
-
+  
   switch (mode)
   {
   case 101:
@@ -141,12 +141,13 @@ void draw()
   case 109:
     {
       MostValuableXI mvxi = new MostValuableXI();
+      mvxi.drawPitch();
       int[] formation = {
         1, 4, 2, 3, 1
       };
       for (int i = 0; i < formation.length; i++)
       {
-        mvxi.display(formation[i], formation.length, i);
+        mvxi.drawXI(formation[i], formation.length, i);
       }
       break;
     }
@@ -155,18 +156,12 @@ void draw()
       fill(255);
       stroke(255);
       textSize(15);
-      text("Stats correct up to the end of the 2014/2015 season.", (float)width * 0.15f, border/2);
+      text("Stats correct up to the end of the 2014/2015 season.", ((float)widthRange * 0.15f), border/2);
     }
     break;
   }
 }
 
-
-
-void TeamAllPoints()
-{
-  text("POINTS", 50, 200);
-}
 
 int mode = 100;
 int team;
@@ -193,7 +188,6 @@ void mainMenu()
 
   for (int i = 1; i < mainMsg.length; i++)
   {
-
     w = (int)textWidth(mainMsg[i]) + padding;
     h = 30;
     int x = ( (int)widthRange / 2) - (w/2);
