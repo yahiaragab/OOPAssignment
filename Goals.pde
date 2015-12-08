@@ -1,3 +1,4 @@
+//Avg goals table
 class Goals extends AvgTable
 {
 

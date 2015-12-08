@@ -1,3 +1,4 @@
+//Avg points table
 class Points extends AvgTable
 {
 

@@ -1,3 +1,4 @@
+//Avg table for goals and graphs parent class
 class AvgTable
 {
   int rank;

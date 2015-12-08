@@ -1,3 +1,4 @@
+//draw team formation
 class MostValuableXI
 {
   int num;
@@ -28,12 +29,12 @@ class MostValuableXI
     age = Integer.parseInt(data[3]);
     value = Integer.parseInt(data[4]);
   }
-  
-  
+
+  //draw football pitch in background
   void drawPitch()
   {
-    fill(0);
-    stroke(150);
+    fill(50, 205, 50);
+    stroke(230);
     strokeWeight(5);
     rect(border, border, widthRange, heightRange);
 
@@ -65,36 +66,41 @@ class MostValuableXI
         line( border + (colDist * 1), border + (rowDist*i), border + (colDist * 7), border + (rowDist*i));
       }
     }//end for
+    strokeWeight(1);
   }//end drawPitch
+
   
+  //my algorithm for drawing the formation
   int counter = 0;
 
   void drawXI(int numInLine, int lines, int Z)
   {
+    fill(255);
+    text("MOST VALUABLE XI (MARKET VALUE:453.000.000€)", widthRange/2, border/2);
     float w = 60;
     float h = 80;
-    float padding = 10;
-    float rowDist = ( widthRange / (numInLine + 1) ) - (w/2);
-    float colDist = (heightRange / (float)lines) + padding;
+    float rowDist = ( widthRange / (numInLine+1) ) - (w/2);
+    float colDist = heightRange / (float)lines;
 
     //draw XI
     for (int i = counter; i < numInLine + counter; i++)
     {
       float x = ( ( ( rowDist * ( i - counter) ) + rowDist ) + border ) + (w/2);
-      
-      if(i == 0 || i == 10)
+
+      if ( (i - counter) == 0 )
       {
-        x -= w/2;
+        x -= (w/2);
       }
-      
-      float y = ( heightRange - ( (colDist * Z) + colDist ) ) + (border*2);
-      rect(x, y, w, h);
+
+      float y = ( heightRange - ( (colDist * Z) + colDist ) ) + (border + border/2);
+      noStroke();
+      fill(255, 165, 0);
+      rect( x - 5, y - 5, w + 10, h+ 10);
       image(player.get(i).pic, x, y, w, h);
-      stroke(255);
-      textSize(20);
-      fill(255);
+      stroke(0);
+      fill(0);
       textAlign(CENTER);
-      text(player.get(i).name, x + ( w/2 ), y + ( h + (h/4) ));
+      text(player.get(i).pos + ": " + player.get(i).name, x + ( w/2 ), y + ( h + (h/4) ));
     }
 
     counter += numInLine;
@@ -104,7 +110,6 @@ class MostValuableXI
       counter = 0;
     }
   }//display
-  
   
 }//end class
 

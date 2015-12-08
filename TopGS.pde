@@ -1,3 +1,4 @@
+//top Goals scorers in PL history
 class TopGS
 {
   String name;
@@ -20,32 +21,44 @@ class TopGS
     A = Integer.parseInt(data[2]);
   }
 
-
+  //show table
   void showTopScorers()
   {
-    background(0);
-
-    float rowDist =  (heightRange + border)  / (float)alltime.size();
+    background(100,149,237);
+    text(scorer.size() + " Players", border * 4, 20);
+    float rowDist =  (heightRange + border)  / ((float)scorer.size()+1);
     float colDist = 0;
-    float padding = 5;
-    String[] cols ;
-    String[] dataAllTime = loadStrings("TopGS.csv");
+    float padding = 15;
+    int numCols = 3;
+    String[] ColNames = {"Name", "Goals Scored", "Assists"};
 
-    for (int i = 0; i < dataAllTime.length; i++)
+    textAlign(LEFT);
+    for (int i = 0; i < scorer.size (); i++)
     {
-      cols = dataAllTime[i].split(",");
-      for (int j = 0; j < cols.length; j++)
+      for (int j = 0; j < numCols; j++)
       {
-        colDist = (float)widthRange / cols.length;
-        textAlign(LEFT);
+        
+          text( ColNames[j],   colDist * (j) + padding, border+rowDist);
+        
+        colDist = (float)widthRange / (numCols);
+        //textAlign(RIGHT);
         stroke(255);
         fill(255);
-        text( cols[j], (colDist * j), ((rowDist * i) + rowDist ) + border);
+
+        if (j == 0)
+          text( scorer.get(i).name, (colDist * (j))  + padding, ((rowDist * i) + rowDist ) + (border+border/3));
+        else if (j == 1)
+          text( scorer.get(i).GS, (colDist * (j))  + padding, ((rowDist * i) + rowDist ) + (border+border/3));
+         else if (j == 2)
+          text( scorer.get(i).A, (colDist * (j))  + padding, ((rowDist * i) + rowDist ) + (border+border/3));
+        
       }
-      stroke(255, 0, 0);
-      line(colDist * i, border, colDist * i, (float)height);
-    }//end for
-  }//end show topscorers
+      stroke(0);
+      line(0, border + (rowDist * (i+1)), width, border + (rowDist*(i+1)));
+      if ( i <= 1 || i > 3)
+      line(colDist * (i+1), border, colDist * (i+1), (float)height);
+    }
+  }//end showTable
   
   
   
